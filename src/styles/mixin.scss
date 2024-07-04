@@ -1,0 +1,43 @@
+@import '/src/styles/variables.scss';
+
+@mixin center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin between {
+    display: flex;
+    justify-content: space-between;
+}
+
+@mixin column {
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin fontStyle($font, $size, $weight, $color) {
+    font-family: $font;
+    font-size: $size;
+    font-weight: $weight;
+    color: $color;
+}
+
+@mixin borderAndRadius($color) {
+    border: 1px solid $color;
+    border-radius: 8px;
+}
+
+@mixin enterText {
+    width: 100%;
+    padding: 8px 14px;
+    border: none;
+    outline: none;
+    background: $bg-secondary;
+    @include borderAndRadius($accent);
+    @include fontStyle($font-roboto, 16px, 400, $text-secondary);
+
+    @media (max-width: 768px) {
+        font-size: 14px;
+    }
+}
