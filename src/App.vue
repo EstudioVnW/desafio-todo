@@ -1,4 +1,36 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref, computed } from 'vue'
+
+const data = ref([])
+
+data.value = [
+    {
+        id: 1,
+        title: 'Fazer almoço',
+        description:
+            'Tenho que fazer almoço as 12h, será Arroz, Feijão e Carne moída.',
+        concluded: false,
+    },
+    {
+        id: 2,
+        title: 'Estudar',
+        description: 'Fazer prova da faculdade',
+        concluded: true,
+    },
+]
+
+const completedTodo = computed(() => {
+    return data.value.filter((todo) => todo.concluded)
+})
+
+const uncompletedTodo = computed(() => {
+    return data.value.filter((todo) => !todo.concluded)
+})
+
+const toggleConcluded = computed(() => {
+    return data.value.filter((todo) => todo.concluded)
+})
+</script>
 
 <template>
     <main class="container">
@@ -20,20 +52,46 @@
             <button class="btn-submit" type="submit">+</button>
         </form>
 
-        <section>
+        <section v-if="data.length === 0">
             <h1 class="no-task">No tasks</h1>
         </section>
 
-        <section class="card-container">
-            <div class="card">
+        <section class="card-container" v-if="data.length > 0">
+            <div class="card" v-for="todo in uncompletedTodo" :key="todo.id">
                 <div class="card-content">
-                    <h2 class="card-content-title">Task Title...</h2>
-                    <p class="card-content-description">Task Description...</p>
+                    <h2 class="card-content-title">{{ todo.title }}</h2>
+                    <p class="card-content-description">
+                        {{ todo.description }}
+                    </p>
                 </div>
 
                 <div class="card-content">
+                    <input
+                        type="checkbox"
+                        name="concluded"
+                        class="card-toggle"
+                        v-model="todo.concluded"
+                    />
                     <button class="card-content-btn">❌</button>
-                    <button class="card-content-btn">✅</button>
+                </div>
+            </div>
+
+            <div class="card" v-for="todo in completedTodo" :key="todo.id">
+                <div class="card-content">
+                    <h2 class="card-content-title">{{ todo.title }}</h2>
+                    <p class="card-content-description">
+                        {{ todo.description }}
+                    </p>
+                </div>
+
+                <div class="card-content">
+                    <input
+                        type="checkbox"
+                        name="concluded"
+                        class="card-toggle"
+                        v-model="todo.concluded"
+                    />
+                    <button class="card-content-btn">❌</button>
                 </div>
             </div>
         </section>
@@ -125,6 +183,12 @@
 
 .card-content-description {
     @include fontStyle($font-roboto, 14px, 400, $text-primary);
+}
+
+.card-toggle {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
 }
 
 .card-content-btn {
