@@ -16,6 +16,29 @@ const data = ref([
         concluded: true,
     },
 ])
+const titleTaskValue = ref<string | null>(null)
+const descriptionTaskValue = ref<string | null>(null)
+const search = ref<string | null>(null)
+const error = ref<string | null>(null)
+
+const onSubmit = () => {
+    if (titleTaskValue.value && descriptionTaskValue.value) {
+        const obj = {
+            id: data.value.length + 1,
+            title: titleTaskValue.value,
+            description: descriptionTaskValue.value,
+            concluded: false,
+        }
+
+        data.value.push(obj)
+        titleTaskValue.value = null
+        descriptionTaskValue.value = null
+
+        return
+    }
+
+    error.value = 'Por favor, preencha todos os campos obrigatórios.'
+}
 
 const completedTodo = computed(() => {
     return data.value.filter((todo) => todo.concluded)
@@ -25,10 +48,6 @@ const uncompletedTodo = computed(() => {
     return data.value.filter((todo) => !todo.concluded)
 })
 
-const toggleConcluded = computed(() => {
-    return data.value.filter((todo) => todo.concluded)
-})
-
 const removeItem = (id) => {
     return (data.value = data.value.filter((todo) => todo.id !== id))
 }
@@ -36,23 +55,42 @@ const removeItem = (id) => {
 
 <template>
     <main class="container">
-        <form class="form-data">
+        <form @submit.prevent="onSubmit" class="form-data">
             <div class="enter-text">
                 <input
                     class="form-input-title"
                     type="text"
+                    name="title"
                     placeholder="Título da tarefa"
+                    v-model="titleTaskValue"
+                    value="titleTaskValue"
                     required
                 />
                 <textarea
                     class="form-enter-description"
                     placeholder="Descrição da tarefa"
+                    name="description"
+                    v-model="descriptionTaskValue"
+                    value="descriptionTaskValue"
                     required
                 ></textarea>
+                <p>{{ error }}</p>
             </div>
 
             <button class="btn-submit" type="submit">+</button>
         </form>
+
+        <div>
+            <input
+                class="form-input-title"
+                type="text"
+                name="title"
+                placeholder="Pesquisa"
+                v-model="search"
+                value="search"
+                required
+            />
+        </div>
 
         <section v-if="data.length === 0">
             <h1 class="no-task">No tasks</h1>
