@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 
-const data = ref([])
-
-data.value = [
+const data = ref([
     {
         id: 1,
         title: 'Fazer almoço',
@@ -17,7 +15,7 @@ data.value = [
         description: 'Fazer prova da faculdade',
         concluded: true,
     },
-]
+])
 
 const completedTodo = computed(() => {
     return data.value.filter((todo) => todo.concluded)
@@ -30,6 +28,10 @@ const uncompletedTodo = computed(() => {
 const toggleConcluded = computed(() => {
     return data.value.filter((todo) => todo.concluded)
 })
+
+const removeItem = (id) => {
+    return (data.value = data.value.filter((todo) => todo.id !== id))
+}
 </script>
 
 <template>
@@ -72,7 +74,12 @@ const toggleConcluded = computed(() => {
                         class="card-toggle"
                         v-model="todo.concluded"
                     />
-                    <button class="card-content-btn">❌</button>
+                    <button
+                        class="card-content-btn"
+                        @click="removeItem(todo.id)"
+                    >
+                        ❌
+                    </button>
                 </div>
             </div>
 
@@ -91,7 +98,12 @@ const toggleConcluded = computed(() => {
                         class="card-toggle"
                         v-model="todo.concluded"
                     />
-                    <button class="card-content-btn">❌</button>
+                    <button
+                        class="card-content-btn"
+                        @click="removeItem(todo.id)"
+                    >
+                        ❌
+                    </button>
                 </div>
             </div>
         </section>
