@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import TaskForm from './components/TaskForm.vue'
+import TaskList from './components/TaskList.vue'
 
 const data = ref([
     {
@@ -16,36 +18,28 @@ const data = ref([
         concluded: true,
     },
 ])
-const titleTaskValue = ref<string | null>(null)
-const descriptionTaskValue = ref<string | null>(null)
 const search = ref<string | null>(null)
 const error = ref<string | null>(null)
 
-const onSubmit = () => {
-    if (titleTaskValue.value && descriptionTaskValue.value) {
-        const obj = {
-            id: data.value.length + 1,
-            title: titleTaskValue.value,
-            description: descriptionTaskValue.value,
-            concluded: false,
-        }
-
-        data.value.push(obj)
-        titleTaskValue.value = null
-        descriptionTaskValue.value = null
-        error.value = null
-        return
+const addTask = (title: string, description: string) => {
+    const obj = {
+        id: data.value.length + 1,
+        title,
+        description,
+        concluded: false,
     }
-
-    error.value = 'Por favor, preencha todos os campos obrigatórios.'
+    data.value.push(obj)
+    error.value = null
 }
 
 const completedTodo = computed(() =>
     data.value.filter((todo) => todo.concluded)
 )
+
 const uncompletedTodo = computed(() =>
     data.value.filter((todo) => !todo.concluded)
 )
+
 const searchTodo = computed(() => {
     if (!search.value) return []
     const title = search.value.toLowerCase()
@@ -59,112 +53,30 @@ const removeItem = (id: number) => {
 
 <template>
     <main class="container">
-        <form @submit.prevent="onSubmit" class="form-data">
-            <div class="enter-text">
-                <input
-                    class="form-input-title"
-                    type="text"
-                    name="title"
-                    placeholder="Título da tarefa"
-                    v-model="titleTaskValue"
-                    required
-                />
-                <textarea
-                    class="form-enter-description"
-                    placeholder="Descrição da tarefa"
-                    name="description"
-                    v-model="descriptionTaskValue"
-                    required
-                ></textarea>
-                <p>{{ error }}</p>
-            </div>
-            <button class="btn-submit" type="submit">+</button>
-        </form>
+        <TaskForm :onSubmit="addTask" :error="error" />
 
-        <div>
+        <section>
             <input
-                class="form-input-title"
+                class="input"
                 type="text"
                 name="title"
                 placeholder="Pesquisa"
                 v-model="search"
             />
-        </div>
-
-        <section v-if="searchTodo.length">
-            <h2>Resultados da pesquisa</h2>
-            <div class="card-container">
-                <div class="card" v-for="todo in searchTodo" :key="todo.id">
-                    <div class="card-content">
-                        <h2 class="card-content-title">{{ todo.title }}</h2>
-                        <p class="card-content-description">
-                            {{ todo.description }}
-                        </p>
-                    </div>
-                    <div class="card-content">
-                        <input
-                            type="checkbox"
-                            v-model="todo.concluded"
-                            class="card-toggle"
-                        />
-                        <button
-                            @click="removeItem(todo.id)"
-                            class="card-content-btn"
-                        >
-                            ❌
-                        </button>
-                    </div>
-                </div>
-            </div>
         </section>
 
-        <section v-if="data.length === 0 && !search">
-            <h1 class="no-task">No tasks</h1>
+        <section class="container-itens" v-if="searchTodo.length">
+            <h2 class="message">Resultados da pesquisa</h2>
+            <TaskList :todos="searchTodo" :onRemove="removeItem" />
         </section>
 
-        <section class="card-container" v-if="data.length > 0 && !search">
-            <div class="card" v-for="todo in uncompletedTodo" :key="todo.id">
-                <div class="card-content">
-                    <h2 class="card-content-title">{{ todo.title }}</h2>
-                    <p class="card-content-description">
-                        {{ todo.description }}
-                    </p>
-                </div>
-                <div class="card-content">
-                    <input
-                        type="checkbox"
-                        v-model="todo.concluded"
-                        class="card-toggle"
-                    />
-                    <button
-                        @click="removeItem(todo.id)"
-                        class="card-content-btn"
-                    >
-                        ❌
-                    </button>
-                </div>
-            </div>
-            <div class="card" v-for="todo in completedTodo" :key="todo.id">
-                <div class="card-content">
-                    <h2 class="card-content-title">{{ todo.title }}</h2>
-                    <p class="card-content-description">
-                        {{ todo.description }}
-                    </p>
-                </div>
-                <div class="card-content">
-                    <input
-                        type="checkbox"
-                        v-model="todo.concluded"
-                        class="card-toggle"
-                    />
-                    <button
-                        @click="removeItem(todo.id)"
-                        class="card-content-btn"
-                    >
-                        ❌
-                    </button>
-                </div>
-            </div>
+        <section class="container-itens" v-if="data.length === 0 && !search">
+            <h1 class="message">No tasks</h1>
+        </section>
+
+        <section class="container-itens" v-if="data.length > 0 && !search">
+            <TaskList :todos="uncompletedTodo" :onRemove="removeItem" />
+            <TaskList :todos="completedTodo" :onRemove="removeItem" />
         </section>
     </main>
 </template>
@@ -185,87 +97,17 @@ const removeItem = (id: number) => {
     }
 }
 
-.form-data {
-    @include between;
-    gap: 8px;
-}
-
-.enter-text {
+.container-itens {
     @include column;
-    gap: 8px;
-    flex: 5;
-
-    @media (max-width: 768px) {
-        flex: 4;
-    }
-
-    @media (max-width: 450px) {
-        flex: 3;
-    }
+    gap: 24px;
 }
 
-.form-input-title {
-    @include enterText;
-}
-
-.form-enter-description {
-    resize: none;
-    @include enterText;
-}
-
-.btn-submit {
-    flex: 1;
-    background: $bg-secondary;
-    @include borderAndRadius($accent);
-    @include fontStyle($font-roboto, 80px, 300, $accent);
-    cursor: pointer;
-
-    @media (max-width: 450px) {
-        font-size: 48px;
-    }
-}
-
-.no-task {
+.message {
     @include fontStyle($font-roboto, 24px, 400, $text);
     text-align: center;
 }
 
-.card-container {
-    @include column;
-    gap: 16px;
-}
-
-.card {
-    @include center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 16px;
-    @include borderAndRadius($accent);
-}
-
-.card-content {
-    @include column;
-    gap: 8px;
-}
-
-.card-content-title {
-    @include fontStyle($font-roboto, 22px, 500, $text-primary);
-}
-
-.card-content-description {
-    @include fontStyle($font-roboto, 14px, 400, $text-primary);
-}
-
-.card-toggle {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-}
-
-.card-content-btn {
-    font-size: 18px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
+.input {
+    @include enterText;
 }
 </style>
