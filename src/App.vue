@@ -35,11 +35,9 @@ const addTask = (title: string, description: string) => {
 const completedTodo = computed(() =>
     data.value.filter((todo) => todo.concluded)
 )
-
 const uncompletedTodo = computed(() =>
     data.value.filter((todo) => !todo.concluded)
 )
-
 const searchTodo = computed(() => {
     if (!search.value) return []
     const title = search.value.toLowerCase()
@@ -49,13 +47,17 @@ const searchTodo = computed(() => {
 const removeItem = (id: number) => {
     data.value = data.value.filter((todo) => todo.id !== id)
 }
+
+const updateConcluded = (todo, concluded) => {
+    todo.concluded = concluded
+}
 </script>
 
 <template>
     <main class="container">
         <TaskForm :onSubmit="addTask" :error="error" />
 
-        <section>
+        <div>
             <input
                 class="input"
                 type="text"
@@ -63,20 +65,35 @@ const removeItem = (id: number) => {
                 placeholder="Pesquisa"
                 v-model="search"
             />
+        </div>
+
+        <section class="container-itens" v-if="search">
+            <h1 class="msg">Resultados da pesquisa</h1>
+            <TaskList
+                :todos="searchTodo"
+                :onRemove="removeItem"
+                @update:concluded="updateConcluded"
+            />
         </section>
 
-        <section class="container-itens" v-if="searchTodo.length">
-            <h2 class="message">Resultados da pesquisa</h2>
-            <TaskList :todos="searchTodo" :onRemove="removeItem" />
+        <section
+            class="container-itens"
+            v-if="(data === [] && !search) || search === ''"
+        >
+            <h1 class="msg">Não há tarefas pendentes</h1>
         </section>
 
-        <section class="container-itens" v-if="data.length === 0 && !search">
-            <h1 class="message">No tasks</h1>
-        </section>
-
-        <section class="container-itens" v-if="data.length > 0 && !search">
-            <TaskList :todos="uncompletedTodo" :onRemove="removeItem" />
-            <TaskList :todos="completedTodo" :onRemove="removeItem" />
+        <section class="container-itens" v-if="!search">
+            <TaskList
+                :todos="uncompletedTodo"
+                :onRemove="removeItem"
+                @update:concluded="updateConcluded"
+            />
+            <TaskList
+                :todos="completedTodo"
+                :onRemove="removeItem"
+                @update:concluded="updateConcluded"
+            />
         </section>
     </main>
 </template>
@@ -102,7 +119,7 @@ const removeItem = (id: number) => {
     gap: 24px;
 }
 
-.message {
+.msg {
     @include fontStyle($font-roboto, 24px, 400, $text);
     text-align: center;
 }

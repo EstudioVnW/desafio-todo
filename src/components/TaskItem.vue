@@ -9,21 +9,37 @@ const props = defineProps<{
     onRemove: (id: number) => void
 }>()
 
+const emit = defineEmits(['update:concluded'])
+
 const handleToggle = () => {
-    props.todo.concluded = !props.todo.concluded
+    emit('update:concluded', !props.todo.concluded)
 }
 </script>
 
 <template>
     <div class="card">
         <div class="card-content">
-            <h2 class="card-content-title">{{ todo.title }}</h2>
-            <p class="card-content-description">{{ todo.description }}</p>
+            <h2
+                :class="{
+                    'completed-task': todo.concluded,
+                    'card-content-title': true,
+                }"
+            >
+                {{ todo.title }}
+            </h2>
+            <p
+                :class="{
+                    'completed-task': todo.concluded,
+                    'card-content-description': true,
+                }"
+            >
+                {{ todo.description }}
+            </p>
         </div>
         <div class="card-content">
             <input
                 type="checkbox"
-                v-model="todo.concluded"
+                :checked="todo.concluded"
                 class="card-toggle"
                 @change="handleToggle"
             />
@@ -57,6 +73,11 @@ const handleToggle = () => {
 
 .card-content-description {
     @include fontStyle($font-roboto, 14px, 400, $text-primary);
+}
+
+.completed-task {
+    text-decoration: line-through;
+    color: white;
 }
 
 .card-toggle {

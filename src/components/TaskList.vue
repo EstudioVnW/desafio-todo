@@ -10,6 +10,10 @@ const props = defineProps<{
     }>
     onRemove: (id: number) => void
 }>()
+
+const updateConcluded = (todo, concluded) => {
+    todo.concluded = concluded
+}
 </script>
 
 <template>
@@ -19,6 +23,7 @@ const props = defineProps<{
             :key="todo.id"
             :todo="todo"
             :onRemove="onRemove"
+            @update:concluded="updateConcluded(todo, $event)"
         />
     </div>
 </template>
