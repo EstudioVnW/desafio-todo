@@ -33,23 +33,27 @@ const onSubmit = () => {
         data.value.push(obj)
         titleTaskValue.value = null
         descriptionTaskValue.value = null
-
+        error.value = null
         return
     }
 
     error.value = 'Por favor, preencha todos os campos obrigatórios.'
 }
 
-const completedTodo = computed(() => {
-    return data.value.filter((todo) => todo.concluded)
+const completedTodo = computed(() =>
+    data.value.filter((todo) => todo.concluded)
+)
+const uncompletedTodo = computed(() =>
+    data.value.filter((todo) => !todo.concluded)
+)
+const searchTodo = computed(() => {
+    if (!search.value) return []
+    const title = search.value.toLowerCase()
+    return data.value.filter((todo) => todo.title.toLowerCase().includes(title))
 })
 
-const uncompletedTodo = computed(() => {
-    return data.value.filter((todo) => !todo.concluded)
-})
-
-const removeItem = (id) => {
-    return (data.value = data.value.filter((todo) => todo.id !== id))
+const removeItem = (id: number) => {
+    data.value = data.value.filter((todo) => todo.id !== id)
 }
 </script>
 
@@ -63,7 +67,6 @@ const removeItem = (id) => {
                     name="title"
                     placeholder="Título da tarefa"
                     v-model="titleTaskValue"
-                    value="titleTaskValue"
                     required
                 />
                 <textarea
@@ -71,12 +74,10 @@ const removeItem = (id) => {
                     placeholder="Descrição da tarefa"
                     name="description"
                     v-model="descriptionTaskValue"
-                    value="descriptionTaskValue"
                     required
                 ></textarea>
                 <p>{{ error }}</p>
             </div>
-
             <button class="btn-submit" type="submit">+</button>
         </form>
 
@@ -87,16 +88,41 @@ const removeItem = (id) => {
                 name="title"
                 placeholder="Pesquisa"
                 v-model="search"
-                value="search"
-                required
             />
         </div>
 
-        <section v-if="data.length === 0">
+        <section v-if="searchTodo.length">
+            <h2>Resultados da pesquisa</h2>
+            <div class="card-container">
+                <div class="card" v-for="todo in searchTodo" :key="todo.id">
+                    <div class="card-content">
+                        <h2 class="card-content-title">{{ todo.title }}</h2>
+                        <p class="card-content-description">
+                            {{ todo.description }}
+                        </p>
+                    </div>
+                    <div class="card-content">
+                        <input
+                            type="checkbox"
+                            v-model="todo.concluded"
+                            class="card-toggle"
+                        />
+                        <button
+                            @click="removeItem(todo.id)"
+                            class="card-content-btn"
+                        >
+                            ❌
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section v-if="data.length === 0 && !search">
             <h1 class="no-task">No tasks</h1>
         </section>
 
-        <section class="card-container" v-if="data.length > 0">
+        <section class="card-container" v-if="data.length > 0 && !search">
             <div class="card" v-for="todo in uncompletedTodo" :key="todo.id">
                 <div class="card-content">
                     <h2 class="card-content-title">{{ todo.title }}</h2>
@@ -104,23 +130,20 @@ const removeItem = (id) => {
                         {{ todo.description }}
                     </p>
                 </div>
-
                 <div class="card-content">
                     <input
                         type="checkbox"
-                        name="concluded"
-                        class="card-toggle"
                         v-model="todo.concluded"
+                        class="card-toggle"
                     />
                     <button
-                        class="card-content-btn"
                         @click="removeItem(todo.id)"
+                        class="card-content-btn"
                     >
                         ❌
                     </button>
                 </div>
             </div>
-
             <div class="card" v-for="todo in completedTodo" :key="todo.id">
                 <div class="card-content">
                     <h2 class="card-content-title">{{ todo.title }}</h2>
@@ -128,17 +151,15 @@ const removeItem = (id) => {
                         {{ todo.description }}
                     </p>
                 </div>
-
                 <div class="card-content">
                     <input
                         type="checkbox"
-                        name="concluded"
-                        class="card-toggle"
                         v-model="todo.concluded"
+                        class="card-toggle"
                     />
                     <button
-                        class="card-content-btn"
                         @click="removeItem(todo.id)"
+                        class="card-content-btn"
                     >
                         ❌
                     </button>
