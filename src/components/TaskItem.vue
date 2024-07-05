@@ -36,7 +36,7 @@ const handleToggle = () => {
                 {{ todo.description }}
             </p>
         </div>
-        <div class="card-content">
+        <div class="card-content-change">
             <input
                 type="checkbox"
                 :checked="todo.concluded"
@@ -57,6 +57,7 @@ const handleToggle = () => {
 .card {
     @include center;
     justify-content: space-between;
+    gap: 16px;
     width: 100%;
     padding: 16px;
     @include borderAndRadius($accent);
@@ -64,15 +65,25 @@ const handleToggle = () => {
 
 .card-content {
     @include column;
+    width: 95%;
+    gap: 8px;
+}
+
+.card-content-change {
+    @include column;
+    align-items: center;
+    width: 100%;
     gap: 8px;
 }
 
 .card-content-title {
     @include fontStyle($font-roboto, 22px, 500, $text-primary);
+    word-wrap: break-word;
 }
 
 .card-content-description {
     @include fontStyle($font-roboto, 14px, 400, $text-primary);
+    word-wrap: break-word;
 }
 
 .completed-task {
