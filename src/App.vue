@@ -1,27 +1,30 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import TaskForm from './components/TaskForm.vue'
 import TaskList from './components/TaskList.vue'
 import { DataValues } from './utils/interfaces/dataValues.ts'
 import { updateConcluded } from './utils/functions/updateConcluded'
 
-const data = ref<DataValues[]>([
-    {
-        id: 1,
-        title: 'Fazer almoço',
-        description:
-            'Tenho que fazer almoço as 12h, será Arroz, Feijão e Carne moída.',
-        concluded: false,
-    },
-    {
-        id: 2,
-        title: 'Estudar',
-        description: 'Fazer prova da faculdade',
-        concluded: true,
-    },
-])
+const data = ref<DataValues[]>([])
 const search = ref<string | null>(null)
 const error = ref<string | null>(null)
+
+const initialData: DataValues[] = [
+    { id: 1, title: "Fazer almoço", concluded: false },
+    { id: 2, title: "Estudar", concluded: false },
+    { id: 3, title: "Lavar louça", concluded: false }
+]
+
+onMounted(() => {
+    const storedData = localStorage.getItem('tasks')
+    if (storedData) {
+        data.value = JSON.parse(storedData) || initialData
+    }
+})
+
+watch(data, (newData) => {
+    localStorage.setItem('tasks', JSON.stringify(newData))
+}, { deep: true })
 
 const addTask = (title: string, description: string) => {
     const obj: DataValues = {
@@ -80,7 +83,7 @@ const removeItem = (id: number) => {
 
         <section
             class="container-itens"
-            v-if="!data && !search && search !== ''"
+            v-if="data.length === 0 && !search"
         >
             <h1 class="msg">Não há tarefas pendentes</h1>
         </section>
