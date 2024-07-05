@@ -1,18 +1,35 @@
 .concluded {
-    color: green;
-    text-decoration: none;
-  }
-  
-  button {
-    padding: 4px 8px;
-    background-color: #dc3545;
-    color: white;
-    border: none;
+  color: green;
+  text-decoration: line-through;
+}
+.todo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  input[type="checkbox"] {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50% ;
     cursor: pointer;
-    margin-left: 10px;
-  
-    &:hover {
-      background-color: #c82333;
-    }
   }
-  
+
+  span {
+    flex-grow: 1;
+    margin-left: 10px;
+  }
+
+button {
+  padding: 4px 8px;
+  background-color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-left: 10px;
+
+  &:hover {
+    background-color: #c82333;
+  }
+}
+}

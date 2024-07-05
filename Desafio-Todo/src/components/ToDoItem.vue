@@ -1,8 +1,8 @@
 <template>
-    <div>
-      <input type="checkbox" v-model="todo.concluded" @change="toggleComplete" />
+   <div class="todo-item">
+         <input type="checkbox" :checked="todo.concluded === 'clear'" @change="toggleComplete">
       <span :class="{ concluded: todo.concluded }">{{ todo.title }}</span>
-      <button @click="removeTodo">Delete</button>
+      <button @click="removeTodo">❌ </button>
     </div>
   </template>
   
@@ -30,5 +30,7 @@
   
   <style lang="scss" scoped>
   @import '../style/ToDoItem.scss';
+
+
   </style>
   
