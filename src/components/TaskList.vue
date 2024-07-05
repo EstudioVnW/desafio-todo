@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import TaskItem from './TaskItem.vue'
+import { updateConcluded } from '../utils/functions/updateConcluded.ts'
 
-const props = defineProps<{
+defineProps<{
     todos: Array<{
         id: number
         title: string
@@ -10,10 +11,6 @@ const props = defineProps<{
     }>
     onRemove: (id: number) => void
 }>()
-
-const updateConcluded = (todo, concluded) => {
-    todo.concluded = concluded
-}
 </script>
 
 <template>

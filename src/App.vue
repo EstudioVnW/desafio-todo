@@ -2,8 +2,10 @@
 import { ref, computed } from 'vue'
 import TaskForm from './components/TaskForm.vue'
 import TaskList from './components/TaskList.vue'
+import { DataValues } from './utils/interfaces/dataValues.ts'
+import { updateConcluded } from './utils/functions/updateConcluded'
 
-const data = ref([
+const data = ref<DataValues[]>([
     {
         id: 1,
         title: 'Fazer almoço',
@@ -22,34 +24,34 @@ const search = ref<string | null>(null)
 const error = ref<string | null>(null)
 
 const addTask = (title: string, description: string) => {
-    const obj = {
+    const obj: DataValues = {
         id: data.value.length + 1,
         title,
         description,
         concluded: false,
     }
-    data.value.push(obj)
+
+    data.value.unshift(obj)
     error.value = null
 }
 
 const completedTodo = computed(() =>
-    data.value.filter((todo) => todo.concluded)
+    data.value.filter((todo: DataValues) => todo.concluded)
 )
 const uncompletedTodo = computed(() =>
-    data.value.filter((todo) => !todo.concluded)
+    data.value.filter((todo: DataValues) => !todo.concluded)
 )
 const searchTodo = computed(() => {
     if (!search.value) return []
     const title = search.value.toLowerCase()
-    return data.value.filter((todo) => todo.title.toLowerCase().includes(title))
+
+    return data.value.filter((todo: DataValues) =>
+        todo.title.toLowerCase().includes(title)
+    )
 })
 
 const removeItem = (id: number) => {
-    data.value = data.value.filter((todo) => todo.id !== id)
-}
-
-const updateConcluded = (todo, concluded) => {
-    todo.concluded = concluded
+    data.value = data.value.filter((todo: DataValues) => todo.id !== id)
 }
 </script>
 
@@ -78,7 +80,7 @@ const updateConcluded = (todo, concluded) => {
 
         <section
             class="container-itens"
-            v-if="(data === [] && !search) || search === ''"
+            v-if="!data && !search && search !== ''"
         >
             <h1 class="msg">Não há tarefas pendentes</h1>
         </section>
