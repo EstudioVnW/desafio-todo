@@ -29,3 +29,6 @@ npm install
 ```bash
 npm run dev
 ```
+## Deploy
+
+Link: https://desafio-todo-jh.netlify.app/
