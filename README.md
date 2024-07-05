@@ -64,9 +64,9 @@ Este desafio tem como fim testar minhas habilidades no Vue 3 antes de ingressar 
 ## 🔗 Links
 
 | Ambiente | URL                                      |
-| -------- | ---------------------------------------- | --- |
-| Local    | http://localhost:5173/                   |     |
-| Produção | https://desafiotodo-estudio.netlify.app/ |
+| -------- | ---------------------------------------- |
+| Local    | http://localhost:5173/                   |     
+| Produção | https://desafiotodo-estudio.netlify.app/ 
 
 ## :white_check_mark: Requerimentos
 
