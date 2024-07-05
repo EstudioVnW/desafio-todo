@@ -5,11 +5,12 @@
 }
 body {
     background-color: #ebe5ff;
-    padding: 0 1rem;
+    padding: 0 2vw;
 }
 button,
 figure img {
     cursor: pointer;
+    user-select: none;
 }
 main {
     display: flex;
@@ -20,12 +21,13 @@ main {
 }
 article {
     background-color: #4b05ad;
-    padding: .75rem 1.5vw 1.5vw 1.5vw;
+    padding: .75rem 1.5vw;
     display: grid;
     max-width: 30rem;
     width: 100%;
     gap: .5rem;
     border-radius: 8px;
+    box-shadow: 0 5px 10px black;
 }
 .tasksArea {
     display: grid;
@@ -55,35 +57,8 @@ article {
         letter-spacing: 1px;
         text-align: center;
     }
-
-    div {
-        display: flex;
-        padding: 0 .25rem;
-
-        input {
-            background-color: #2c0076;
-            border-radius: 8px 0 0 8px;
-            color: #d9ceff;
-            font-size: 1rem;
-            width: 100%;
-            padding: .5rem .75rem;
-            border: none;
-
-            &:focus {
-                outline: none;
-            }
-        }
-        button {
-            background-color: #f3f1ff;
-            display: flex;
-            align-items: center;
-            border-radius: 0 8px 8px 0;
-            padding: 0 1rem;
-            border: none;
-        }
-    }
 }
-.tarefa {
+.task {
     background-color: #5a03d5;
     border-radius: 4px;
     color: #f3f1ff;
@@ -91,6 +66,8 @@ article {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: background-color .1s ease,
+                color .1s ease;
     
     h2 {
         font-size: 1.125rem;
@@ -100,17 +77,57 @@ article {
         gap: 1vw;
         display: flex;
         
-        img {
-            padding: 1px;
+        img:nth-child(2) {
+            padding: 2px;
+            background-color: #5a03d5;
+            border-radius: 50%;
         }
+    }
+}
+.add,
+.search {
+    display: flex;
+    padding: 0 .25rem;
+
+    input {
+        background-color: #2c0076;
+        border-radius: 8px 0 0 8px;
+        color: #d9ceff;
+        font-size: 1rem;
+        width: 100%;
+        padding: .5rem .75rem;
+        border: none;
+
+        &::placeholder {
+            color: #4b05ad;
+        }
+        &:focus {
+            outline: none;
+        }
+    }
+    button {
+        background-color: #f3f1ff;
+        display: flex;
+        align-items: center;
+        border-radius: 0 8px 8px 0;
+        padding: 0 1rem;
+        border: none;
+    }
+}
+.search {
+    color: #d9ceff;
+    justify-content: space-between;
+    
+    h3 {
+        font-size: 1rem;
+    }
+    
+    div {
+        display: flex;
+        width: 100%;
     }
 }
 .concluded {
     background-color: #f3f1ff;
     color: #5a03d5;
-
-    img:nth-child(2) {
-        background-color: #4b05ad;
-        border-radius: 50%;
-    }
 }

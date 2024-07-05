@@ -2,36 +2,75 @@ import "./style.scss"
 import Trash from "../../assets/exclude.svg"
 import Confirm from "../../assets/confirm.svg"
 import Add from "../../assets/add.svg"
+import Search from "../../assets/seach.svg"
 import { useState } from "react"
 
-export default function Main(): any {
+import {IOrcTaskTypes} from "../iterfaces"
 
-    const data = [ { "id": 1, "title": "Fazer almoço", "concluded": true }, 
-        { "id": 2, "title": "Estudar", "concluded": false }, 
-        { "id": 3, "title": "Lavar louça", "concluded": false }
+export default function Main() {
+
+    const data: IOrcTaskTypes[] = [ 
+        { id: 1, title: "Fazer almoço", concluded: false }, 
+        { id: 2, title: "Estudar", concluded: false }, 
+        { id: 3, title: "Lavar louça", concluded: false }
     ]
-    const [allTasks, setAllTasks] = useState(data)
+    const [allTasks, setAllTasks] = useState<IOrcTaskTypes[]>(data)
+    const [originalTasks, setOriginalTasks] = useState(allTasks)
 
     const [newTask, setNewTask] = useState('')
-    const addItem = () => {
+
+    const generateTaskId = () => {
+        let num: number;
+        originalTasks.sort((a, b) => a.id - b.id)
+        for (let n = 1;; n++) {
+            try {
+                num = originalTasks[n - 1].id
+            } catch {
+                num = 999
+            }
+            if (n == num) {
+                continue;
+            } else {
+                num = n;
+                break;
+            }
+        }
+        return num
+    }
+
+    const addItem = (e: Event) => {
+        e.preventDefault()
+        const id = generateTaskId()
         if (newTask) {
-            setAllTasks(allTasks.concat({id: allTasks.length + 1, title: newTask, concluded: false}))
+            setAllTasks(allTasks.concat({id: id, title: newTask, concluded: false}))
+            setOriginalTasks(originalTasks.concat({id: id, title: newTask, concluded: false}))
         }
     }
 
-    const handleKeyUp = (key: any) => {
-        if (key.key === "Enter") {
-            addItem()
+    const eraseTask = (task: IOrcTaskTypes) => {
+        setAllTasks(allTasks.filter(f => f != task ? f : ''))
+        setOriginalTasks(allTasks.filter(f => f == task ? '' : f))
+    }
+
+    const [search, setSearch] = useState('')
+    const searchTasks = (e: Event) => {
+        e.preventDefault()
+        const filteredTasks = originalTasks.filter(f => f.title.toLowerCase().includes(search.toLowerCase()));
+        if(search != '') {
+            setAllTasks(filteredTasks)
+        }
+        else if (search != '' && filteredTasks.length > 0) {
+            alert("Essa pesquisa não deu resultados")
+        }
+        else if(search == '') {
+            setAllTasks(originalTasks)
+        }
+        else {
+            alert("Resultado inesperado")
         }
     }
-
-    addEventListener("keyup", handleKeyUp)
-
-    const eraseTask = (task: any) => {
-        setAllTasks(allTasks.filter((item) => item != task ? item : ''))
-    }
-
-    const concludeTask = (task: any) => {
+    
+    const concludeTask = (task: IOrcTaskTypes) => {
         let taskStyle = document.querySelector(`.tarefaNum${task.id}`)
         taskStyle?.classList.toggle("concluded")
     }
@@ -42,16 +81,16 @@ export default function Main(): any {
                     <h1>
                         To-do List
                     </h1>
-                    <div>
-                        <input type="text" name="tarefa" onChange={(e) => setNewTask(e.target.value)} />
-                        <button onClick={addItem}>
+                    <form className="add" onSubmit={(e: any) => addItem(e)}>
+                        <input type="text" name="task" onChange={(e) => setNewTask(e.target.value)} placeholder="Adcionar"/>
+                        <button type="submit">
                             <img src={Add} alt="" />
                         </button>
-                    </div>
+                    </form>
                 </section>
                 <div className="tasksArea">
-                    {allTasks.map((task) => (
-                        <section className={`tarefa tarefaNum${task.id}`} key={task.id}>
+                    {allTasks.map((task: IOrcTaskTypes) => (
+                        <section className={`task tarefaNum${task.id}`} key={task.id}>
                             <h2>
                                 {task.title}
                             </h2>
@@ -62,12 +101,12 @@ export default function Main(): any {
                         </section>
                     ))}
                 </div>
-                <div>
-                    <input type="text" name="tarefa" onChange={(e) => setNewTask(e.target.value)} />
-                    <button onClick={addItem}>
-                        <img src={Add} alt="" />
+                <form className="search" onSubmit={(e: any) => searchTasks(e)}>
+                    <input type="text" name="tarefa" onChange={(e) => setSearch(e.target.value)} placeholder="Pesquisar"/>
+                    <button type="submit">
+                        <img src={Search} alt="" />
                     </button>
-                </div>
+                </form>
             </article>
         </main>
     )
