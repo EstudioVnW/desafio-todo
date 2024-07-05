@@ -1,0 +1,56 @@
+.todo-list {
+  max-width: 600px;
+  margin: 20px auto; /* Centraliza o bloco na tela */
+  padding: 20px; /* Adiciona espaçamento interno */
+
+  background-color: #8a2be2; /* Cor de fundo roxa */
+
+  border-radius: 10px; /* Bordas arredondadas */
+
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra para efeito de elevação */
+
+  h1 {
+    text-align: center;
+    margin-bottom: 10px; /* Espaçamento abaixo do título */
+    margin-top: 0; /* Remove a margem superior do título */
+    color: white; /* Cor do texto */
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+
+    li {
+      background-color: white; /* Cor de fundo branca para cada item da lista */
+      padding: 15px; /* Espaçamento interno */
+      margin-bottom: 10px; /* Espaçamento entre os itens */
+      border-radius: 5px; /* Bordas arredondadas */
+
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave para os itens */
+
+      &:last-child {
+        margin-bottom: 0; /* Remove o espaço abaixo do último item */
+      }
+    }
+  }
+
+  input[type="text"],
+  button {
+    display: block; /* Elementos em blocos separados */
+    width: 100%; /* Ocupa toda a largura disponível */
+    padding: 10px;
+    margin-bottom: 10px; /* Espaçamento entre os inputs e botões */
+    border: none; /* Remove a borda padrão */
+    border-radius: 5px; /* Bordas arredondadas */
+  }
+
+  button {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+}
