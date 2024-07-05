@@ -1,6 +1,6 @@
 <template>
    <div class="todo-item">
-         <input type="checkbox" :checked="todo.concluded === 'clear'" @change="toggleComplete">
+         <input type="checkbox" :checked="todo.concluded " @change="toggleComplete">
       <span :class="{ concluded: todo.concluded }">{{ todo.title }}</span>
       <button @click="removeTodo">❌ </button>
     </div>
