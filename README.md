@@ -26,4 +26,4 @@ Construir uma aplicação web em React com TypeScript que tenha função de uma 
    npm run dev
    ```
 
-## Acesse o deploy do site <a href="" target="blank-">AQUI</a>
+## Acesse o deploy do site <a href="https://desafio-todo-tau.vercel.app" target="blank-">AQUI</a>
