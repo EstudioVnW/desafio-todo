@@ -83,7 +83,7 @@ export default function Main() {
                         To-do List
                     </h1>
                     <form className="add" onSubmit={(e: any) => addItem(e)}>
-                        <input type="text" name="task" value={newTask} onChange={(e) => setNewTask(e.target.value)} placeholder="Adcionar"/>
+                        <input type="text" name="task" value={newTask} onChange={(e) => setNewTask(e.target.value)} placeholder="Adcionar" maxLength={25}/>
                         <button type="submit">
                             <img src={Add} alt="" />
                         </button>
