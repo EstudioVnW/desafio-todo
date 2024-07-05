@@ -17,7 +17,7 @@ export default function Main() {
     const [allTasks, setAllTasks] = useState<IOrcTaskTypes[]>(data)
     const [originalTasks, setOriginalTasks] = useState(allTasks)
 
-    const [newTask, setNewTask] = useState('')
+    const [newTask, setNewTask] = useState<string>('')
 
     const generateTaskId = () => {
         let num: number;
@@ -40,6 +40,7 @@ export default function Main() {
 
     const addItem = (e: Event) => {
         e.preventDefault()
+        setNewTask('')
         const id = generateTaskId()
         if (newTask) {
             setAllTasks(allTasks.concat({id: id, title: newTask, concluded: false}))
@@ -82,7 +83,7 @@ export default function Main() {
                         To-do List
                     </h1>
                     <form className="add" onSubmit={(e: any) => addItem(e)}>
-                        <input type="text" name="task" onChange={(e) => setNewTask(e.target.value)} placeholder="Adcionar"/>
+                        <input type="text" name="task" value={newTask} onChange={(e) => setNewTask(e.target.value)} placeholder="Adcionar"/>
                         <button type="submit">
                             <img src={Add} alt="" />
                         </button>
