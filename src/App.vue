@@ -10,9 +10,9 @@ const search = ref<string | null>(null)
 const error = ref<string | null>(null)
 
 const initialData: DataValues[] = [
-    { id: 1, title: "Fazer almoço", concluded: false },
-    { id: 2, title: "Estudar", concluded: false },
-    { id: 3, title: "Lavar louça", concluded: false }
+    { id: 1, title: "Fazer almoço", description: 'Fazer arroz, feijão, bife e salada.', concluded: false },
+    { id: 2, title: "Estudar", description: 'Fazer provas da faculdade.', concluded: false },
+    { id: 3, title: "Lavar louça", description: 'Lavar e enxugar as vasilhas', concluded: false }
 ]
 
 onMounted(() => {
