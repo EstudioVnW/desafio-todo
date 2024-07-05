@@ -10,11 +10,11 @@ Construir uma aplicação web em React com TypeScript que tenha função de uma 
 ## Executando o projeto
 1. Clone o repositório:
    ```
-   git clone https://github.com/RafaelD-S/hiring-front-end.git
+   git clone https://github.com/RafaelD-S/desafio-todo
    ```
 2. Entre no diretório do projeto:
    ```
-   cd To-do-list
+   cd desafio-todo
    ```
 3. Instale as dependências:
    ```
@@ -26,4 +26,4 @@ Construir uma aplicação web em React com TypeScript que tenha função de uma 
    npm run dev
    ```
 
-## Acesse o deploy do site <a href="hiring-front-end-eight.vercel.app" target="blank-">AQUI</a>
+## Acesse o deploy do site <a href="" target="blank-">AQUI</a>
