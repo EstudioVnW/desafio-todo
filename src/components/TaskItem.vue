@@ -57,6 +57,7 @@ const handleToggle = () => {
 .card {
     @include center;
     justify-content: space-between;
+    flex-wrap: wrap;
     gap: 16px;
     width: 100%;
     padding: 16px;
@@ -65,25 +66,29 @@ const handleToggle = () => {
 
 .card-content {
     @include column;
-    width: 95%;
+    flex: 5;
     gap: 8px;
 }
 
 .card-content-change {
     @include column;
     align-items: center;
-    width: 100%;
+    flex: 1;
     gap: 8px;
 }
 
 .card-content-title {
     @include fontStyle($font-roboto, 22px, 500, $text-primary);
     word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .card-content-description {
     @include fontStyle($font-roboto, 14px, 400, $text-primary);
     word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .completed-task {
