@@ -1,61 +1,110 @@
+<h1 align="center" id="top"> To do List  </h1>
 
-## Objetivo
-Construir um TODO List baseado nos aprendizados do curso
+<img src="https://github.com/brunowzz/desafio-todo/blob/bruno-barreiras/.github/screens/4.png" width='100%' alt="Imagem 1"/>
 
-## Como começar
-Dar um fork no projeto, clonar o repositório em sua máquina local e criar um branch novo para o seu código.
+> 🔎 Lista de tarefas, <a href="https://desafiotodo-estudio.netlify.app/"> Link do projeto </a>
 
+## :page_facing_up: Desafio Técnico: Lista de tarefas
 
-## Regras de negócio
-•	Listagem de tarefas
-•	Busca de tarefa
-•	Adicionar tarefa
-•	Remover tarefa
-•	Alterar tarefa para concluído (alterar cor da fonte)
+**Visão Geral**:
+Este desafio tem como fim testar minhas habilidades no Vue 3 antes de ingressar na squad do BTG Pactual de Vue.
 
+## Requisitos Funcionais\*\*:
 
-## Referências
-•	Json de referencia para consumo
+• Ao acessar a aplicação será necessário listar as tarefas padrões.
+• Ao digitar no campo de busca, deve-se trazer somente os resultados digitados.
+• Ao clicar no botão "+", deve-se inserir a tarefa na listagem.
+• No card de listagem deve-se remover a tarefa e marcá-la como concluída.
 
-const data = [
-    {
-        "id": 1,
-        "title": "Fazer almoço",
-        "concluded": false
-    },
-    {
-        "id": 2,
-        "title": "Estudar",
-        "concluded": false
-    },
-    {
-        "id": 3,
-        "title": "Lavar louça",
-        "concluded": false
-    }
-]
+## 📁 Pages
 
+-   **Home:** página principal do projeto contendo todas as funcionalidades da aplicação.
 
+## 🎯 Steps
 
-## Observações
+**Configuração Inicial**:
 
-1. Design de livre escolha.
+-   Inicializei o projeto utilizando Vite e o Vue 3 juntamente com o TypeScript.
+-   Configurei o projeto com prettier, eslint e scss.
 
+**Implementação Inicial:**
 
-## Requisitos Técnicos para a entrega do teste
+-   Desenvolvi uma versão funcional da aplicação na raiz do projeto para testar funcionalidades básicas e estruturar a lógica principal.
 
-•	O projeto deve ter uma documentação em readme ensinando a: 
-1. instalar o projeto na máquina (engines, versão de node, qual gerenciador de pacote usar)
-2. instalar as dependências do projeto
-3. rodar o ambiente de desenvolvimento
-4. rodar a build de deploy da aplicação.
+**Criação de Utils e Interfaces:**
 
-•	Pode utilizar tanto o Axios quanto ou Fetch para requisições.
+-   Criei um módulo utils para agrupar funções que eram reutilizadas em diferentes partes da aplicação.
+-   Defini interfaces TypeScript para padronizar a estrutura dos dados utilizados.
 
-•	Hospedar o projeto em um servidor (Heroku, Vercel, Netlify)
+**Implementação de Mixins em SCSS:**
 
-## Diferenciais técnicos
+-   Desenvolvi mixins em SCSS para evitar repetição de código CSS, facilitando a aplicação de estilos consistentes.
 
-•	Utilização de typescript
+## 📁 Screens Mobile
 
-Boa sorte!
+<div style="display: flex; justify-content: space-between;">
+    <img src="https://github.com/brunowzz/desafio-todo/blob/bruno-barreiras/.github/screens/1.png" alt="Imagem" width="200"/>
+    <img src="https://github.com/brunowzz/desafio-todo/blob/bruno-barreiras/.github/screens/2.png" alt="Imagem" width="200"/>
+</div>
+
+## 📁 Screens Desktop
+
+<div style="display: flex; justify-content: space-between;">
+    <img src="https://github.com/brunowzz/desafio-todo/blob/bruno-barreiras/.github/screens/3.png" alt="Imagem" width="500"/>
+    <img src="https://github.com/brunowzz/desafio-todo/blob/bruno-barreiras/.github/screens/4.png" alt="Imagem" width="500"/>
+</div>
+
+## 🚀 Tecnologias
+
+-   [Vue](https://vuejs.org/)
+-   [Typescript](https://www.typescriptlang.org/)
+-   [Vite](https://vitejs.dev/)
+-   [Scss](https://sass-lang.com/)
+
+## 🔗 Links
+
+| Ambiente | URL                                      |
+| -------- | ---------------------------------------- |
+| Local    | http://localhost:5173/                   |     
+| Produção | https://desafiotodo-estudio.netlify.app/ 
+
+## :white_check_mark: Requerimentos
+
+Antes de iniciar :checkered_flag:, você precisa ter o [Git](https://git-scm.com) e o [Node](https://nodejs.org/en/) instalados.
+
+## :checkered_flag: Iniciar
+
+```
+#  Clone este projeto
+$ git clone https://github.com/brunowzz/desafio-todo
+
+# Acessar
+$ cd desafio-todo
+$ git checkout bruno-barreiras
+
+# Instalar dependências
+$ npm i
+
+# Execute o projeto
+$ npm run dev
+# O servidor será inicializado em <http://localhost:5173>
+```
+
+## 🤝 Colaborador
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/brunowzz">
+        <img src="https://avatars.githubusercontent.com/u/94939630?v=4" width="160px;" alt="Foto do Bruno Barreiras no GitHub"/><br>
+        <sub>
+          <b>Bruno Vinícius</b>
+        </sub>
+      </a>
+    </td>
+  </tr>
+</table>
+
+## 📝 Licença
+
+Este projeto está sob licença. Consulte o arquivo [LICENSE](LICENSE.md) para obter mais detalhes.
