@@ -2,11 +2,10 @@
   <div class="todo-list">
     <h1>To-Do List</h1>
     <div class="inputs-container">
-      <div class="pesquisar">
-      <input v-model="newTodoText" @keyup.enter="addTodo" placeholder="Adicionar Tarefa" />
-       <button @click="addTodo" class="add-button">✚</button>
-       </div>
-      <input v-model="searchQuery" placeholder="Procurar Tarefa" />
+        <input v-model="newTodoText" @keyup.enter="addTodo" placeholder="✚ Adicionar Tarefa " class="add-todo-input" />
+       
+      
+      <input v-model="searchQuery" placeholder="Procurar Tarefa" class="seach-todo-input" />
     </div>
     <ul>
       <li v-if="filteredTodos.length === 0">Sem tarefas</li>
@@ -16,6 +15,7 @@
     </ul>
   </div>
 </template>
+
 
 <script lang="ts">
 import { defineComponent, reactive, ref, computed } from 'vue';
@@ -90,24 +90,20 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import '../style/ToDoList.scss';
 
-.inputs-container {
-  display: flex;
-  align-items: center;
-}
-
-.add-button,
-.search-button {
-  margin-left: 10px;
+.add-todo-input{
+  width: 250px; 
   padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  background-color: #007bff;
-  color: white;
-}
-
-.add-button:hover,
-.search-button:hover {
-  background-color: #0056b3;
-}
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  }
+  .seach-todo-input{
+  width: 250px; 
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  }
 </style>

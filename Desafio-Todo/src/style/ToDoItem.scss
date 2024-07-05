@@ -32,4 +32,25 @@ button {
     background-color: #c82333;
   }
 }
+@media (max-width: 600px) {
+  .todo-item {
+    
+    input[type="checkbox"] {
+      width: 8px;
+      height: 4px;
+      
+    }
+
+    span {
+      margin-left: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 3px 6px;
+      font-size: 14px;
+      margin-left: 8px;
+    }
+  }
+}
 }
