@@ -57,17 +57,14 @@ export default function Main() {
     const searchTasks = (e: Event) => {
         e.preventDefault()
         const filteredTasks = originalTasks.filter(f => f.title.toLowerCase().includes(search.toLowerCase()));
-        if(search != '') {
-            setAllTasks(filteredTasks)
-        }
-        else if (search != '' && filteredTasks.length > 0) {
+        if (search != '' && filteredTasks.length < 1) {
             alert("Essa pesquisa não deu resultados")
         }
-        else if(search == '') {
-            setAllTasks(originalTasks)
+        else if(search != '') {
+            setAllTasks(filteredTasks)
         }
         else {
-            alert("Resultado inesperado")
+            setAllTasks(originalTasks)
         }
     }
     
