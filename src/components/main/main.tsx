@@ -5,7 +5,7 @@ import Add from "../../assets/add.svg"
 import Search from "../../assets/seach.svg"
 import { useState } from "react"
 
-import {IOrcTaskTypes} from "../iterfaces"
+import {IOrcTaskTypes} from "../interfaces"
 
 export default function Main() {
 
