@@ -20,22 +20,22 @@ export default function Main() {
     const [newTask, setNewTask] = useState<string>('')
 
     const generateTaskId = () => {
-        let num: number;
+        let generatedId: number;
         originalTasks.sort((a, b) => a.id - b.id)
         for (let n = 1;; n++) {
             try {
-                num = originalTasks[n - 1].id
+                generatedId = originalTasks[n - 1].id
             } catch {
-                num = 999
+                generatedId = 999
             }
-            if (n == num) {
+            if (n == generatedId) {
                 continue;
             } else {
-                num = n;
+                generatedId = n;
                 break;
             }
         }
-        return num
+        return generatedId
     }
 
     const addItem = (e: Event) => {
@@ -71,30 +71,31 @@ export default function Main() {
     const concludeTask = (task: IOrcTaskTypes) => {
         let taskStyle = document.querySelector(`.tarefaNum${task.id}`)
         taskStyle?.classList.toggle("concluded")
+        task.concluded = !task.concluded
     }
     return (
         <main>
             <article>
                 <section className="add-item">
-                    <h1>
+                    <h1 title="To-do List">
                         To-do List
                     </h1>
                     <form className="add" onSubmit={(e: any) => addItem(e)}>
                         <input type="text" name="task" value={newTask} onChange={(e) => setNewTask(e.target.value)} placeholder="Adcionar" maxLength={25}/>
                         <button type="submit">
-                            <img src={Add} alt="" />
+                            <img src={Add} alt="Adcionar" />
                         </button>
                     </form>
                 </section>
                 <div className="tasksArea">
                     {allTasks.map((task: IOrcTaskTypes) => (
                         <section className={`task tarefaNum${task.id}`} key={task.id}>
-                            <h2>
+                            <h2 title={task.title}>
                                 {task.title}
                             </h2>
                             <figure>
-                                <img src={Trash} alt="" onClick={() => eraseTask(task)}/>
-                                <img src={Confirm} alt="" onClick={() => concludeTask(task)}/>
+                                <img src={Trash} alt="Excluir" onClick={() => eraseTask(task)}/>
+                                <img src={Confirm} alt="Completar Task" onClick={() => concludeTask(task)}/>
                             </figure>
                         </section>
                     ))}
@@ -102,7 +103,7 @@ export default function Main() {
                 <form className="search" onSubmit={(e: any) => searchTasks(e)}>
                     <input type="text" name="tarefa" onChange={(e) => setSearch(e.target.value)} placeholder="Pesquisar"/>
                     <button type="submit">
-                        <img src={Search} alt="" />
+                        <img src={Search} alt="Pesquisar" />
                     </button>
                 </form>
             </article>
