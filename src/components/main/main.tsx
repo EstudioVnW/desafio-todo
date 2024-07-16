@@ -38,13 +38,7 @@ export default function Main() {
         return generatedId
     }
 
-    const preventSameTask = () => {
-        let isDifferent: boolean = true
-        originalTasks.forEach((e) => {
-            e.title.toLowerCase() === newTask.toLowerCase() ? isDifferent = false : isDifferent = true
-        })
-        return isDifferent
-    }
+    const preventSameTask = () => !originalTasks.some(task => task.title.toLowerCase() === newTask.toLowerCase());
 
     const addItem = (e: Event) => {
         e.preventDefault()
