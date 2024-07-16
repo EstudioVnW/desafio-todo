@@ -3,7 +3,7 @@ import Trash from "../../assets/exclude.svg"
 import Confirm from "../../assets/confirm.svg"
 import Add from "../../assets/add.svg"
 import Search from "../../assets/seach.svg"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import {IOrcTaskTypes} from "../interfaces"
 
@@ -18,6 +18,7 @@ export default function Main() {
     const [originalTasks, setOriginalTasks] = useState(allTasks)
 
     const [newTask, setNewTask] = useState<string>('')
+    const [search, setSearch] = useState('')
 
     const generateTaskId = () => {
         let generatedId: number;
@@ -55,7 +56,6 @@ export default function Main() {
         setOriginalTasks(originalTasks.filter((f) => f.id !== task.id))
     }
 
-    const [search, setSearch] = useState('')
     const searchTasks = (e: Event) => {
         e.preventDefault()
         const filteredTasks = originalTasks.filter(f => f.title.toLowerCase().includes(search.toLowerCase()));
@@ -71,10 +71,16 @@ export default function Main() {
     }
     
     const concludeTask = (task: IOrcTaskTypes) => {
-        let taskStyle = document.querySelector(`.tarefaNum${task.id}`)
-        taskStyle?.classList.toggle("concluded")
         task.concluded = !task.concluded
+        setOriginalTasks([...originalTasks])
     }
+    useEffect(() => {
+        originalTasks.forEach((e) => {
+            let taskClassList = document.querySelector(`.taskNum${e.id}`)?.classList
+            e.concluded ? taskClassList?.add("concluded") : taskClassList?.remove("concluded")
+        })
+    }, [originalTasks, allTasks])
+    
     return (
         <main>
             <article>
@@ -91,7 +97,7 @@ export default function Main() {
                 </section>
                 <div className="tasksArea">
                     {allTasks.map((task: IOrcTaskTypes) => (
-                        <section className={`task tarefaNum${task.id}`} key={task.id}>
+                        <section className={`task taskNum${task.id}`} key={task.id}>
                             <h2 title={task.title}>
                                 {task.title}
                             </h2>
