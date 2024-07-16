@@ -38,13 +38,21 @@ export default function Main() {
         return generatedId
     }
 
+    const preventSameTask = () => {
+        let isDifferent: boolean = true
+        originalTasks.forEach((e) => {
+            e.title.toLowerCase() === newTask.toLowerCase() ? isDifferent = false : isDifferent = true
+        })
+        return isDifferent
+    }
+
     const addItem = (e: Event) => {
         e.preventDefault()
-        setNewTask('')
         const id = generateTaskId()
-        if (newTask) {
+        if (newTask && preventSameTask()) {
             setAllTasks(allTasks.concat({id: id, title: newTask, concluded: false}))
             setOriginalTasks(originalTasks.concat({id: id, title: newTask, concluded: false}))
+            setNewTask('')
         }
     }
 
