@@ -51,8 +51,8 @@ export default function Main() {
     }
 
     const eraseTask = (task: IOrcTaskTypes) => {
-        setAllTasks(allTasks.filter(f => f != task ? f : ''))
-        setOriginalTasks(allTasks.filter(f => f == task ? '' : f))
+        setAllTasks(allTasks.filter((f) => f.id !== task.id))
+        setOriginalTasks(originalTasks.filter((f) => f.id !== task.id))
     }
 
     const [search, setSearch] = useState('')
@@ -67,6 +67,8 @@ export default function Main() {
         }
         else {
             setAllTasks(originalTasks)
+            // console.log(originalTasks)
+            // console.log(allTasks)
         }
     }
     
