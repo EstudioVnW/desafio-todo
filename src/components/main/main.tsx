@@ -67,8 +67,6 @@ export default function Main() {
         }
         else {
             setAllTasks(originalTasks)
-            // console.log(originalTasks)
-            // console.log(allTasks)
         }
     }
     
