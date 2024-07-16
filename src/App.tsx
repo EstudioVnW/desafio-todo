@@ -1,0 +1,12 @@
+import Main from "./components/main/main.tsx"
+
+function App() {
+
+  return (
+    <>
+      <Main/>
+    </>
+  )
+}
+
+export default App
